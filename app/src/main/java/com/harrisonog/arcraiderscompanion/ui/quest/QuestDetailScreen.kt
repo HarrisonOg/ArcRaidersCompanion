@@ -20,6 +20,7 @@ import com.harrisonog.arcraiderscompanion.domain.model.Quest
 import com.harrisonog.arcraiderscompanion.domain.model.QuestObjective
 import com.harrisonog.arcraiderscompanion.domain.model.QuestStatus
 import com.harrisonog.arcraiderscompanion.domain.model.RequiredItem
+import com.harrisonog.arcraiderscompanion.domain.model.RequiredItemWithInventory
 import com.harrisonog.arcraiderscompanion.domain.model.Reward
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -74,12 +75,15 @@ fun QuestDetailScreen(
                 }
                 uiState.quest != null -> {
                     QuestDetailContent(
-                        quest = uiState.quest!!,
+                        uiState = uiState,
                         onToggleObjective = { objectiveId ->
                             viewModel.onEvent(QuestDetailEvent.ToggleObjective(objectiveId))
                         },
                         onUpdateStatus = { status ->
                             viewModel.onEvent(QuestDetailEvent.UpdateStatus(status))
+                        },
+                        onUpdateItemQuantity = { itemId, itemName, quantity, imageUrl ->
+                            viewModel.onEvent(QuestDetailEvent.UpdateItemQuantity(itemId, itemName, quantity, imageUrl))
                         },
                         onNavigateToItem = onNavigateToItem
                     )
@@ -91,12 +95,14 @@ fun QuestDetailScreen(
 
 @Composable
 fun QuestDetailContent(
-    quest: Quest,
+    uiState: QuestDetailUiState,
     onToggleObjective: (String) -> Unit,
     onUpdateStatus: (QuestStatus) -> Unit,
+    onUpdateItemQuantity: (String, String, Int, String?) -> Unit,
     onNavigateToItem: (String) -> Unit,
     modifier: Modifier = Modifier
 ) {
+    val quest = uiState.quest ?: return
     Column(
         modifier = modifier
             .fillMaxSize()
@@ -222,7 +228,7 @@ fun QuestDetailContent(
         }
 
         // Required Items
-        if (quest.requiredItems.isNotEmpty()) {
+        if (uiState.requiredItemsWithInventory.isNotEmpty()) {
             Card(
                 modifier = Modifier.fillMaxWidth()
             ) {
@@ -237,9 +243,17 @@ fun QuestDetailContent(
                         fontWeight = FontWeight.Bold
                     )
                     Spacer(modifier = Modifier.height(8.dp))
-                    quest.requiredItems.forEach { item ->
-                        RequiredItemRow(
+                    uiState.requiredItemsWithInventory.forEach { item ->
+                        RequiredItemRowWithInventory(
                             item = item,
+                            onQuantityChange = { newQuantity ->
+                                onUpdateItemQuantity(
+                                    item.itemId,
+                                    item.itemName,
+                                    newQuantity,
+                                    item.imageUrl
+                                )
+                            },
                             onClick = { onNavigateToItem(item.itemId) }
                         )
                     }
@@ -385,6 +399,88 @@ fun RewardRow(
             text = "${reward.itemName} x${reward.quantity} (${reward.type})",
             style = MaterialTheme.typography.bodyMedium,
             color = MaterialTheme.colorScheme.tertiary
+        )
+    }
+}
+
+@Composable
+fun RequiredItemRowWithInventory(
+    item: RequiredItemWithInventory,
+    onQuantityChange: (Int) -> Unit,
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier
+) {
+    Column(
+        modifier = modifier
+            .fillMaxWidth()
+            .clickable(onClick = onClick)
+            .padding(vertical = 8.dp)
+    ) {
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Text(
+                text = item.itemName,
+                style = MaterialTheme.typography.bodyMedium,
+                modifier = Modifier.weight(1f)
+            )
+
+            Row(
+                horizontalArrangement = Arrangement.spacedBy(8.dp),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                IconButton(
+                    onClick = {
+                        if (item.quantityOwned > 0) {
+                            onQuantityChange(item.quantityOwned - 1)
+                        }
+                    },
+                    enabled = item.quantityOwned > 0
+                ) {
+                    Text(
+                        text = "-",
+                        style = MaterialTheme.typography.titleLarge,
+                        color = if (item.quantityOwned > 0)
+                            MaterialTheme.colorScheme.primary
+                        else
+                            MaterialTheme.colorScheme.outline
+                    )
+                }
+
+                Text(
+                    text = "${item.quantityOwned} / ${item.quantityNeeded}",
+                    style = MaterialTheme.typography.bodyMedium,
+                    fontWeight = FontWeight.Bold,
+                    color = if (item.isComplete)
+                        MaterialTheme.colorScheme.tertiary
+                    else
+                        MaterialTheme.colorScheme.onSurface
+                )
+
+                IconButton(
+                    onClick = { onQuantityChange(item.quantityOwned + 1) }
+                ) {
+                    Text(
+                        text = "+",
+                        style = MaterialTheme.typography.titleLarge,
+                        color = MaterialTheme.colorScheme.primary
+                    )
+                }
+            }
+        }
+
+        // Progress bar
+        LinearProgressIndicator(
+            progress = { item.percentComplete },
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = 4.dp),
+            color = if (item.isComplete)
+                MaterialTheme.colorScheme.tertiary
+            else
+                MaterialTheme.colorScheme.primary
         )
     }
 }

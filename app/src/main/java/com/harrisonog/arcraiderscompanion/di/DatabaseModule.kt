@@ -3,6 +3,7 @@ package com.harrisonog.arcraiderscompanion.di
 import android.content.Context
 import androidx.room.Room
 import com.harrisonog.arcraiderscompanion.data.local.AppDatabase
+import com.harrisonog.arcraiderscompanion.data.local.dao.InventoryDao
 import com.harrisonog.arcraiderscompanion.data.local.dao.ItemDao
 import com.harrisonog.arcraiderscompanion.data.local.dao.QuestDao
 import dagger.Module
@@ -40,5 +41,11 @@ object DatabaseModule {
     @Singleton
     fun provideItemDao(database: AppDatabase): ItemDao {
         return database.itemDao()
+    }
+
+    @Provides
+    @Singleton
+    fun provideInventoryDao(database: AppDatabase): InventoryDao {
+        return database.inventoryDao()
     }
 }

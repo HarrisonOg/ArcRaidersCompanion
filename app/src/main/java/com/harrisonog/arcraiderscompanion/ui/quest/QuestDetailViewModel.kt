@@ -4,12 +4,15 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.harrisonog.arcraiderscompanion.domain.model.QuestStatus
+import com.harrisonog.arcraiderscompanion.domain.model.RequiredItemWithInventory
+import com.harrisonog.arcraiderscompanion.domain.repository.InventoryRepository
 import com.harrisonog.arcraiderscompanion.domain.repository.QuestRepository
 import com.harrisonog.arcraiderscompanion.domain.util.Result
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -17,6 +20,7 @@ import javax.inject.Inject
 @HiltViewModel
 class QuestDetailViewModel @Inject constructor(
     private val questRepository: QuestRepository,
+    private val inventoryRepository: InventoryRepository,
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
@@ -35,6 +39,12 @@ class QuestDetailViewModel @Inject constructor(
             is QuestDetailEvent.ToggleObjective -> toggleObjective(event.objectiveId)
             is QuestDetailEvent.MarkAsInProgress -> updateStatus(QuestStatus.IN_PROGRESS)
             is QuestDetailEvent.MarkAsCompleted -> updateStatus(QuestStatus.COMPLETED)
+            is QuestDetailEvent.UpdateItemQuantity -> updateItemQuantity(
+                event.itemId,
+                event.itemName,
+                event.quantity,
+                event.imageUrl
+            )
         }
     }
 
@@ -42,15 +52,45 @@ class QuestDetailViewModel @Inject constructor(
         viewModelScope.launch {
             _uiState.update { it.copy(isLoading = true) }
 
-            questRepository.getQuestById(questId).collect { quest ->
+            combine(
+                questRepository.getQuestById(questId),
+                inventoryRepository.getAllInventoryItems()
+            ) { quest, inventoryItems ->
+                val inventoryMap = inventoryItems.associateBy { it.itemId }
+
+                val requiredItemsWithInventory = quest?.requiredItems?.map { required ->
+                    val inventoryItem = inventoryMap[required.itemId]
+                    RequiredItemWithInventory(
+                        itemId = required.itemId,
+                        itemName = required.itemName,
+                        quantityNeeded = required.quantity,
+                        quantityOwned = inventoryItem?.quantity ?: 0,
+                        imageUrl = required.imageUrl
+                    )
+                } ?: emptyList()
+
+                Pair(quest, requiredItemsWithInventory)
+            }.collect { (quest, requiredItemsWithInventory) ->
                 _uiState.update {
                     it.copy(
                         quest = quest,
+                        requiredItemsWithInventory = requiredItemsWithInventory,
                         isLoading = false,
                         error = if (quest == null) "Quest not found" else null
                     )
                 }
             }
+        }
+    }
+
+    private fun updateItemQuantity(
+        itemId: String,
+        itemName: String,
+        quantity: Int,
+        imageUrl: String?
+    ) {
+        viewModelScope.launch {
+            inventoryRepository.updateItemQuantity(itemId, itemName, quantity, imageUrl)
         }
     }
 
