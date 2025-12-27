@@ -3,6 +3,7 @@ package com.harrisonog.arcraiderscompanion.data.repository
 import com.harrisonog.arcraiderscompanion.data.local.dao.QuestDao
 import com.harrisonog.arcraiderscompanion.data.local.entity.toDomain
 import com.harrisonog.arcraiderscompanion.data.local.entity.toEntity
+import com.harrisonog.arcraiderscompanion.data.local.preferences.SyncPreferences
 import com.harrisonog.arcraiderscompanion.data.mapper.toDomain
 import com.harrisonog.arcraiderscompanion.data.remote.MetaForgeApi
 import com.harrisonog.arcraiderscompanion.domain.model.Quest
@@ -17,7 +18,8 @@ import javax.inject.Singleton
 @Singleton
 class QuestRepositoryImpl @Inject constructor(
     private val api: MetaForgeApi,
-    private val questDao: QuestDao
+    private val questDao: QuestDao,
+    private val syncPreferences: SyncPreferences
 ) : QuestRepository {
 
     override fun getAllQuests(): Flow<List<Quest>> {
@@ -61,6 +63,9 @@ class QuestRepositoryImpl @Inject constructor(
                 }
             }
 
+            // Update last sync timestamp
+            syncPreferences.setLastQuestSync(System.currentTimeMillis())
+
             Result.Success(Unit)
         } catch (e: Exception) {
             Result.Error(e)
@@ -89,8 +94,11 @@ class QuestRepositoryImpl @Inject constructor(
     }
 
     override suspend fun syncQuests(): Result<Unit> {
+        // Check if we should sync based on time or empty database
+        val shouldSync = syncPreferences.shouldSyncQuests()
         val questCount = questDao.getQuestCount()
-        return if (questCount == 0) {
+
+        return if (shouldSync || questCount == 0) {
             refreshQuests()
         } else {
             Result.Success(Unit)

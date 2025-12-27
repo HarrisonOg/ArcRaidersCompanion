@@ -3,6 +3,7 @@ package com.harrisonog.arcraiderscompanion.data.repository
 import com.harrisonog.arcraiderscompanion.data.local.dao.ItemDao
 import com.harrisonog.arcraiderscompanion.data.local.entity.toDomain
 import com.harrisonog.arcraiderscompanion.data.local.entity.toEntity
+import com.harrisonog.arcraiderscompanion.data.local.preferences.SyncPreferences
 import com.harrisonog.arcraiderscompanion.data.mapper.toDomain
 import com.harrisonog.arcraiderscompanion.data.remote.MetaForgeApi
 import com.harrisonog.arcraiderscompanion.domain.model.Item
@@ -18,7 +19,8 @@ import javax.inject.Singleton
 @Singleton
 class ItemRepositoryImpl @Inject constructor(
     private val api: MetaForgeApi,
-    private val itemDao: ItemDao
+    private val itemDao: ItemDao,
+    private val syncPreferences: SyncPreferences
 ) : ItemRepository {
 
     override fun getAllItems(): Flow<List<Item>> {
@@ -67,6 +69,10 @@ class ItemRepositoryImpl @Inject constructor(
             val itemDtos = response.data ?: emptyList()
             val items = itemDtos.mapNotNull { it.toDomain() }
             itemDao.insertItems(items.map { it.toEntity() })
+
+            // Update last sync timestamp
+            syncPreferences.setLastItemSync(System.currentTimeMillis())
+
             Result.Success(Unit)
         } catch (e: Exception) {
             Result.Error(e)
@@ -74,8 +80,11 @@ class ItemRepositoryImpl @Inject constructor(
     }
 
     override suspend fun syncItems(): Result<Unit> {
+        // Check if we should sync based on time or empty database
+        val shouldSync = syncPreferences.shouldSyncItems()
         val itemCount = itemDao.getItemCount()
-        return if (itemCount == 0) {
+
+        return if (shouldSync || itemCount == 0) {
             refreshItems()
         } else {
             Result.Success(Unit)
