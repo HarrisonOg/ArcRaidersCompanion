@@ -63,7 +63,8 @@ class ItemRepositoryImpl @Inject constructor(
 
     override suspend fun refreshItems(): Result<Unit> {
         return try {
-            val itemDtos = api.getItems()
+            val response = api.getItems()
+            val itemDtos = response.data ?: emptyList()
             val items = itemDtos.mapNotNull { it.toDomain() }
             itemDao.insertItems(items.map { it.toEntity() })
             Result.Success(Unit)

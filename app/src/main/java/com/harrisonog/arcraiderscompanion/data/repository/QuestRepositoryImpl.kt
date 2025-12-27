@@ -44,7 +44,8 @@ class QuestRepositoryImpl @Inject constructor(
 
     override suspend fun refreshQuests(): Result<Unit> {
         return try {
-            val questDtos = api.getQuests()
+            val response = api.getQuests()
+            val questDtos = response.data ?: emptyList()
             val quests = questDtos.mapNotNull { it.toDomain() }
 
             quests.forEach { newQuest ->

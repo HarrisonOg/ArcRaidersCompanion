@@ -1,9 +1,7 @@
 package com.harrisonog.arcraiderscompanion.data.mapper
 
-import com.harrisonog.arcraiderscompanion.data.remote.ObjectiveDto
 import com.harrisonog.arcraiderscompanion.data.remote.QuestDto
-import com.harrisonog.arcraiderscompanion.data.remote.RequiredItemDto
-import com.harrisonog.arcraiderscompanion.data.remote.RewardDto
+import com.harrisonog.arcraiderscompanion.data.remote.QuestItemDto
 import com.harrisonog.arcraiderscompanion.domain.model.*
 
 fun QuestDto.toDomain(): Quest? {
@@ -13,60 +11,52 @@ fun QuestDto.toDomain(): Quest? {
     return Quest(
         id = questId,
         name = questName,
-        description = description,
-        objectives = objectives?.mapNotNull { it.toDomain() } ?: emptyList(),
-        requiredItems = requiredItems?.mapNotNull { it.toDomain() } ?: emptyList(),
-        rewards = rewards?.mapNotNull { it.toDomain() } ?: emptyList(),
+        description = null, // API doesn't provide description
+        objectives = objectives?.mapIndexed { index, description ->
+            QuestObjective(
+                id = "$questId-objective-$index",
+                description = description,
+                isCompleted = false,
+                orderIndex = index
+            )
+        } ?: emptyList(),
+        requiredItems = requiredItems?.mapNotNull { it.toRequiredItem() } ?: emptyList(),
+        rewards = (rewards?.mapNotNull { it.toReward() } ?: emptyList()) +
+                  (grantedItems?.mapNotNull { it.toReward() } ?: emptyList()),
         xpReward = xp,
         status = QuestStatus.NOT_STARTED,
         completedObjectives = emptySet(),
-        mapLocation = map,
-        questChain = questChain,
-        prerequisiteQuests = prerequisites ?: emptyList(),
-        imageUrl = imageUrl
+        mapLocation = locations?.firstOrNull()?.map,
+        questChain = markerCategory,
+        prerequisiteQuests = emptyList(), // API doesn't provide this
+        imageUrl = image
     )
 }
 
-fun ObjectiveDto.toDomain(): QuestObjective? {
-    val objectiveId = id ?: return null
-    val objectiveDescription = description ?: return null
-
-    return QuestObjective(
-        id = objectiveId,
-        description = objectiveDescription,
-        isCompleted = false,
-        orderIndex = order ?: 0
-    )
-}
-
-fun RequiredItemDto.toDomain(): RequiredItem? {
-    val id = itemId ?: return null
-    val name = itemName ?: return null
-    val qty = quantity ?: return null
+fun QuestItemDto.toRequiredItem(): RequiredItem? {
+    val itemDetails = item ?: return null
+    val itemIdValue = itemDetails.id ?: itemId ?: return null
+    val itemNameValue = itemDetails.name ?: return null
+    val quantityValue = quantity?.toIntOrNull() ?: 1
 
     return RequiredItem(
-        itemId = id,
-        itemName = name,
-        quantity = qty,
-        imageUrl = imageUrl
+        itemId = itemIdValue,
+        itemName = itemNameValue,
+        quantity = quantityValue,
+        imageUrl = itemDetails.icon
     )
 }
 
-fun RewardDto.toDomain(): Reward? {
-    val name = itemName ?: return null
-    val qty = quantity ?: 1
+fun QuestItemDto.toReward(): Reward? {
+    val itemDetails = item ?: return null
+    val itemNameValue = itemDetails.name ?: return null
+    val quantityValue = quantity?.toIntOrNull() ?: 1
 
     return Reward(
-        itemId = itemId,
-        itemName = name,
-        quantity = qty,
-        imageUrl = imageUrl,
-        type = when (type?.lowercase()) {
-            "item" -> RewardType.ITEM
-            "currency" -> RewardType.CURRENCY
-            "xp" -> RewardType.XP
-            "unlock" -> RewardType.UNLOCK
-            else -> RewardType.ITEM
-        }
+        itemId = itemDetails.id,
+        itemName = itemNameValue,
+        quantity = quantityValue,
+        imageUrl = itemDetails.icon,
+        type = RewardType.ITEM
     )
 }

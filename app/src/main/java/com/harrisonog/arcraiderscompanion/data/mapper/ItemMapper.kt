@@ -1,11 +1,9 @@
 package com.harrisonog.arcraiderscompanion.data.mapper
 
 import com.harrisonog.arcraiderscompanion.data.remote.ItemDto
-import com.harrisonog.arcraiderscompanion.data.remote.RecyclingMaterialDto
 import com.harrisonog.arcraiderscompanion.domain.model.Item
 import com.harrisonog.arcraiderscompanion.domain.model.ItemCategory
 import com.harrisonog.arcraiderscompanion.domain.model.ItemRarity
-import com.harrisonog.arcraiderscompanion.domain.model.RecyclingMaterial
 
 fun ItemDto.toDomain(): Item? {
     val itemId = id ?: return null
@@ -14,38 +12,28 @@ fun ItemDto.toDomain(): Item? {
     return Item(
         id = itemId,
         name = itemName,
-        description = description,
-        imageUrl = imageUrl,
-        category = category.toItemCategory(),
+        description = description ?: flavorText,
+        imageUrl = icon,
+        category = itemType.toItemCategory(),
         rarity = rarity.toItemRarity(),
-        isQuestItem = isQuestItem ?: false,
-        neededForQuests = neededForQuests ?: emptyList(),
-        sellValue = sellValue,
-        recyclingMaterials = recyclingMaterials?.mapNotNull { it.toDomain() } ?: emptyList()
-    )
-}
-
-fun RecyclingMaterialDto.toDomain(): RecyclingMaterial? {
-    val name = materialName ?: return null
-    val qty = quantity ?: return null
-
-    return RecyclingMaterial(
-        materialName = name,
-        quantity = qty
+        isQuestItem = false, // API doesn't provide this
+        neededForQuests = emptyList(), // API doesn't provide this
+        sellValue = value,
+        recyclingMaterials = emptyList() // API doesn't provide this
     )
 }
 
 private fun String?.toItemCategory(): ItemCategory {
-    return when (this?.lowercase()?.replace(" ", "_")) {
-        "weapon" -> ItemCategory.WEAPON
-        "armor" -> ItemCategory.ARMOR
-        "consumable" -> ItemCategory.CONSUMABLE
-        "material" -> ItemCategory.MATERIAL
+    return when (this?.lowercase()?.replace(" ", "_")?.replace("-", "_")) {
+        "weapon", "pistol", "shotgun", "smg", "assault_rifle", "marksman_rifle", "sniper_rifle", "launcher" -> ItemCategory.WEAPON
+        "armor", "helmet", "chest", "legs" -> ItemCategory.ARMOR
+        "consumable", "healing", "booster" -> ItemCategory.CONSUMABLE
+        "material", "crafting_material", "component" -> ItemCategory.MATERIAL
         "quest_item" -> ItemCategory.QUEST_ITEM
-        "mod" -> ItemCategory.MOD
-        "ammo" -> ItemCategory.AMMO
-        "equipment" -> ItemCategory.EQUIPMENT
-        "key" -> ItemCategory.KEY
+        "mod", "weapon_mod", "armor_mod" -> ItemCategory.MOD
+        "ammo", "ammunition" -> ItemCategory.AMMO
+        "equipment", "gadget", "grenade", "deployable" -> ItemCategory.EQUIPMENT
+        "key", "keycard" -> ItemCategory.KEY
         else -> ItemCategory.OTHER
     }
 }

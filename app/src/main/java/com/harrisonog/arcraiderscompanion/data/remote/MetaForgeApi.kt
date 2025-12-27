@@ -17,8 +17,8 @@ interface MetaForgeApi {
     @GET("quests")
     suspend fun getQuests(
         @Query("page") page: Int? = null,
-        @Query("per_page") perPage: Int? = null
-    ): List<QuestDto>
+        @Query("limit") limit: Int? = null
+    ): QuestsResponse
 
     /**
      * Get all items
@@ -27,10 +27,9 @@ interface MetaForgeApi {
     @GET("items")
     suspend fun getItems(
         @Query("page") page: Int? = null,
-        @Query("per_page") perPage: Int? = null,
-        @Query("category") category: String? = null,
-        @Query("quest_items_only") questItemsOnly: Boolean? = null
-    ): List<ItemDto>
+        @Query("limit") limit: Int? = null,
+        @Query("item_type") itemType: String? = null
+    ): ItemsResponse
 
     companion object {
         const val BASE_URL = "https://metaforge.app/api/arc-raiders/"
