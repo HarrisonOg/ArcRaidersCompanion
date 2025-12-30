@@ -11,4 +11,7 @@ sealed class Screen(val route: String) {
     }
     data object WishlistList : Screen("wishlist_list")
     data object MapEventList : Screen("map_event_list")
+    data object MapEventDetail : Screen("map_event_detail/{eventId}") {
+        fun createRoute(eventId: String) = "map_event_detail/$eventId"
+    }
 }

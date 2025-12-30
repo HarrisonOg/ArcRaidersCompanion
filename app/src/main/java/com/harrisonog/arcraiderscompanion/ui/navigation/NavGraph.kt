@@ -8,6 +8,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import com.harrisonog.arcraiderscompanion.ui.item.ItemDetailScreen
 import com.harrisonog.arcraiderscompanion.ui.item.ItemListScreen
+import com.harrisonog.arcraiderscompanion.ui.mapevent.EventDetailScreen
 import com.harrisonog.arcraiderscompanion.ui.mapevent.MapEventListScreen
 import com.harrisonog.arcraiderscompanion.ui.quest.QuestDetailScreen
 import com.harrisonog.arcraiderscompanion.ui.quest.QuestListScreen
@@ -93,7 +94,23 @@ fun NavGraph(
                 onNavigateBack = {
                     navController.navigateUp()
                 },
-                onOpenDrawer = onOpenDrawer
+                onOpenDrawer = onOpenDrawer,
+                onNavigateToEventDetail = { eventId ->
+                    navController.navigate(Screen.MapEventDetail.createRoute(eventId))
+                }
+            )
+        }
+
+        composable(
+            route = Screen.MapEventDetail.route,
+            arguments = listOf(
+                navArgument("eventId") { type = NavType.StringType }
+            )
+        ) {
+            EventDetailScreen(
+                onNavigateBack = {
+                    navController.navigateUp()
+                }
             )
         }
     }
