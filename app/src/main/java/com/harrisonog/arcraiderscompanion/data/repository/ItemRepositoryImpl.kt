@@ -65,10 +65,24 @@ class ItemRepositoryImpl @Inject constructor(
 
     override suspend fun refreshItems(): Result<Unit> {
         return try {
-            val response = api.getItems()
-            val itemDtos = response.data ?: emptyList()
-            val items = itemDtos.mapNotNull { it.toDomain() }
-            itemDao.insertItems(items.map { it.toEntity() })
+            val allItems = mutableListOf<Item>()
+            var currentPage = 1
+            var totalPages = 1
+
+            // Fetch all pages
+            do {
+                val response = api.getItems(page = currentPage, limit = 100)
+                val itemDtos = response.data ?: emptyList()
+                val items = itemDtos.mapNotNull { it.toDomain() }
+                allItems.addAll(items)
+
+                // Update totalPages from pagination info
+                totalPages = response.pagination?.totalPages ?: 1
+                currentPage++
+            } while (currentPage <= totalPages)
+
+            // Insert all items at once
+            itemDao.insertItems(allItems.map { it.toEntity() })
 
             // Update last sync timestamp
             syncPreferences.setLastItemSync(System.currentTimeMillis())

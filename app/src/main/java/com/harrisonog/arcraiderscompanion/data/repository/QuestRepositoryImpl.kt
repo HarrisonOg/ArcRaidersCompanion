@@ -46,11 +46,24 @@ class QuestRepositoryImpl @Inject constructor(
 
     override suspend fun refreshQuests(): Result<Unit> {
         return try {
-            val response = api.getQuests()
-            val questDtos = response.data ?: emptyList()
-            val quests = questDtos.mapNotNull { it.toDomain() }
+            val allQuests = mutableListOf<Quest>()
+            var currentPage = 1
+            var totalPages = 1
 
-            quests.forEach { newQuest ->
+            // Fetch all pages
+            do {
+                val response = api.getQuests(page = currentPage, limit = 100)
+                val questDtos = response.data ?: emptyList()
+                val quests = questDtos.mapNotNull { it.toDomain() }
+                allQuests.addAll(quests)
+
+                // Update totalPages from pagination info
+                totalPages = response.pagination?.totalPages ?: 1
+                currentPage++
+            } while (currentPage <= totalPages)
+
+            // Process all quests, preserving local state
+            allQuests.forEach { newQuest ->
                 val existingQuest = questDao.getQuestByIdSync(newQuest.id)
                 if (existingQuest != null) {
                     val updatedQuest = newQuest.copy(
