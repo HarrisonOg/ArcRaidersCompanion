@@ -4,7 +4,12 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.material3.DrawerValue
+import androidx.compose.material3.rememberDrawerState
+import androidx.compose.runtime.getValue
+import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.harrisonog.arcraiderscompanion.ui.navigation.AppNavigationDrawer
 import com.harrisonog.arcraiderscompanion.ui.navigation.NavGraph
 import com.harrisonog.arcraiderscompanion.ui.theme.ArcRaidersCompanionTheme
 import dagger.hilt.android.AndroidEntryPoint
@@ -17,7 +22,17 @@ class MainActivity : ComponentActivity() {
         setContent {
             ArcRaidersCompanionTheme {
                 val navController = rememberNavController()
-                NavGraph(navController = navController)
+                val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
+                val currentBackStackEntry by navController.currentBackStackEntryAsState()
+                val currentRoute = currentBackStackEntry?.destination?.route
+
+                AppNavigationDrawer(
+                    navController = navController,
+                    currentRoute = currentRoute,
+                    drawerState = drawerState
+                ) {
+                    NavGraph(navController = navController)
+                }
             }
         }
     }

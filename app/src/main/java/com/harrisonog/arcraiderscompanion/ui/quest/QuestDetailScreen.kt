@@ -12,10 +12,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import coil.compose.AsyncImage
 import com.harrisonog.arcraiderscompanion.domain.model.Quest
 import com.harrisonog.arcraiderscompanion.domain.model.QuestObjective
 import com.harrisonog.arcraiderscompanion.domain.model.QuestStatus
@@ -110,6 +112,22 @@ fun QuestDetailContent(
             .padding(16.dp),
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
+        // Quest Image
+        if (quest.imageUrl != null) {
+            Card(
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                AsyncImage(
+                    model = quest.imageUrl,
+                    contentDescription = quest.name,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(200.dp),
+                    contentScale = ContentScale.Fit
+                )
+            }
+        }
+
         // Quest Name and Status
         Card(
             modifier = Modifier.fillMaxWidth()
@@ -393,8 +411,17 @@ fun RewardRow(
         modifier = modifier
             .fillMaxWidth()
             .padding(vertical = 4.dp),
+        horizontalArrangement = Arrangement.spacedBy(8.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
+        if (reward.imageUrl != null) {
+            AsyncImage(
+                model = reward.imageUrl,
+                contentDescription = reward.itemName,
+                modifier = Modifier.size(40.dp),
+                contentScale = ContentScale.Fit
+            )
+        }
         Text(
             text = "${reward.itemName} x${reward.quantity} (${reward.type})",
             style = MaterialTheme.typography.bodyMedium,
@@ -421,11 +448,24 @@ fun RequiredItemRowWithInventory(
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
         ) {
-            Text(
-                text = item.itemName,
-                style = MaterialTheme.typography.bodyMedium,
-                modifier = Modifier.weight(1f)
-            )
+            Row(
+                modifier = Modifier.weight(1f),
+                horizontalArrangement = Arrangement.spacedBy(8.dp),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                if (item.imageUrl != null) {
+                    AsyncImage(
+                        model = item.imageUrl,
+                        contentDescription = item.itemName,
+                        modifier = Modifier.size(40.dp),
+                        contentScale = ContentScale.Fit
+                    )
+                }
+                Text(
+                    text = item.itemName,
+                    style = MaterialTheme.typography.bodyMedium
+                )
+            }
 
             Row(
                 horizontalArrangement = Arrangement.spacedBy(8.dp),

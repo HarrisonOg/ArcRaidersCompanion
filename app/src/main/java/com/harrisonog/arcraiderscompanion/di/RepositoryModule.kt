@@ -3,9 +3,11 @@ package com.harrisonog.arcraiderscompanion.di
 import com.harrisonog.arcraiderscompanion.data.repository.InventoryRepositoryImpl
 import com.harrisonog.arcraiderscompanion.data.repository.ItemRepositoryImpl
 import com.harrisonog.arcraiderscompanion.data.repository.QuestRepositoryImpl
+import com.harrisonog.arcraiderscompanion.data.repository.WishlistRepositoryImpl
 import com.harrisonog.arcraiderscompanion.domain.repository.InventoryRepository
 import com.harrisonog.arcraiderscompanion.domain.repository.ItemRepository
 import com.harrisonog.arcraiderscompanion.domain.repository.QuestRepository
+import com.harrisonog.arcraiderscompanion.domain.repository.WishlistRepository
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -33,4 +35,10 @@ abstract class RepositoryModule {
     abstract fun bindInventoryRepository(
         inventoryRepositoryImpl: InventoryRepositoryImpl
     ): InventoryRepository
+
+    @Binds
+    @Singleton
+    abstract fun bindWishlistRepository(
+        wishlistRepositoryImpl: WishlistRepositoryImpl
+    ): WishlistRepository
 }

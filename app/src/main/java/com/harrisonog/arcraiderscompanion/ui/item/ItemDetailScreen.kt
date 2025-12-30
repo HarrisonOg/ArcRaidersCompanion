@@ -8,12 +8,17 @@ import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import coil.compose.AsyncImage
 import com.harrisonog.arcraiderscompanion.domain.model.Item
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -66,7 +71,18 @@ fun ItemDetailScreen(
                     }
                 }
                 uiState.item != null -> {
-                    ItemDetailContent(item = uiState.item!!)
+                    ItemDetailContent(
+                        uiState = uiState,
+                        onInventoryQuantityChange = { quantity ->
+                            viewModel.onEvent(ItemDetailEvent.UpdateInventoryQuantity(quantity))
+                        },
+                        onAddToWishlist = { quantity ->
+                            viewModel.onEvent(ItemDetailEvent.AddToWishlist(quantity))
+                        },
+                        onRemoveFromWishlist = {
+                            viewModel.onEvent(ItemDetailEvent.RemoveFromWishlist)
+                        }
+                    )
                 }
             }
         }
@@ -75,9 +91,13 @@ fun ItemDetailScreen(
 
 @Composable
 fun ItemDetailContent(
-    item: Item,
+    uiState: ItemDetailUiState,
+    onInventoryQuantityChange: (Int) -> Unit,
+    onAddToWishlist: (Int) -> Unit,
+    onRemoveFromWishlist: () -> Unit,
     modifier: Modifier = Modifier
 ) {
+    val item = uiState.item!!
     Column(
         modifier = modifier
             .fillMaxSize()
@@ -85,6 +105,22 @@ fun ItemDetailContent(
             .padding(16.dp),
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
+        // Item Image
+        if (item.imageUrl != null) {
+            Card(
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                AsyncImage(
+                    model = item.imageUrl,
+                    contentDescription = item.name,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(200.dp),
+                    contentScale = ContentScale.Fit
+                )
+            }
+        }
+
         // Item Name and Badges
         Card(
             modifier = Modifier.fillMaxWidth()
@@ -167,6 +203,170 @@ fun ItemDetailContent(
                 }
                 PropertyRow(label = "Category", value = item.category.name.replace("_", " "))
                 PropertyRow(label = "Rarity", value = item.rarity.name)
+            }
+        }
+
+        // Inventory Card
+        Card(
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(16.dp),
+                verticalArrangement = Arrangement.spacedBy(12.dp)
+            ) {
+                Text(
+                    text = "Inventory",
+                    style = MaterialTheme.typography.titleMedium,
+                    fontWeight = FontWeight.Bold
+                )
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Text(
+                        text = "Quantity Owned:",
+                        style = MaterialTheme.typography.bodyMedium
+                    )
+                    Row(
+                        horizontalArrangement = Arrangement.spacedBy(8.dp),
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        IconButton(
+                            onClick = {
+                                if (uiState.inventoryQuantity > 0) {
+                                    onInventoryQuantityChange(uiState.inventoryQuantity - 1)
+                                }
+                            },
+                            enabled = uiState.inventoryQuantity > 0
+                        ) {
+                            Text(
+                                text = "-",
+                                style = MaterialTheme.typography.titleLarge,
+                                color = if (uiState.inventoryQuantity > 0)
+                                    MaterialTheme.colorScheme.primary
+                                else
+                                    MaterialTheme.colorScheme.outline
+                            )
+                        }
+                        Text(
+                            text = "${uiState.inventoryQuantity}",
+                            style = MaterialTheme.typography.titleMedium,
+                            fontWeight = FontWeight.Bold
+                        )
+                        IconButton(
+                            onClick = { onInventoryQuantityChange(uiState.inventoryQuantity + 1) }
+                        ) {
+                            Text(
+                                text = "+",
+                                style = MaterialTheme.typography.titleLarge,
+                                color = MaterialTheme.colorScheme.primary
+                            )
+                        }
+                    }
+                }
+            }
+        }
+
+        // Wishlist Card
+        Card(
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(16.dp),
+                verticalArrangement = Arrangement.spacedBy(12.dp)
+            ) {
+                Text(
+                    text = "Wishlist",
+                    style = MaterialTheme.typography.titleMedium,
+                    fontWeight = FontWeight.Bold
+                )
+                if (uiState.isInWishlist) {
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.SpaceBetween,
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Column {
+                            Text(
+                                text = "In Wishlist",
+                                style = MaterialTheme.typography.bodyMedium,
+                                color = MaterialTheme.colorScheme.tertiary,
+                                fontWeight = FontWeight.Bold
+                            )
+                            Text(
+                                text = "Needed: ${uiState.wishlistQuantity}",
+                                style = MaterialTheme.typography.bodySmall,
+                                color = MaterialTheme.colorScheme.onSurfaceVariant
+                            )
+                        }
+                        OutlinedButton(onClick = onRemoveFromWishlist) {
+                            Text("Remove")
+                        }
+                    }
+                } else {
+                    var wishlistQuantity by remember { mutableStateOf(1) }
+                    Column(
+                        verticalArrangement = Arrangement.spacedBy(8.dp)
+                    ) {
+                        Row(
+                            modifier = Modifier.fillMaxWidth(),
+                            horizontalArrangement = Arrangement.SpaceBetween,
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            Text(
+                                text = "Quantity needed:",
+                                style = MaterialTheme.typography.bodyMedium
+                            )
+                            Row(
+                                horizontalArrangement = Arrangement.spacedBy(8.dp),
+                                verticalAlignment = Alignment.CenterVertically
+                            ) {
+                                IconButton(
+                                    onClick = {
+                                        if (wishlistQuantity > 1) {
+                                            wishlistQuantity--
+                                        }
+                                    },
+                                    enabled = wishlistQuantity > 1
+                                ) {
+                                    Text(
+                                        text = "-",
+                                        style = MaterialTheme.typography.titleLarge,
+                                        color = if (wishlistQuantity > 1)
+                                            MaterialTheme.colorScheme.primary
+                                        else
+                                            MaterialTheme.colorScheme.outline
+                                    )
+                                }
+                                Text(
+                                    text = "$wishlistQuantity",
+                                    style = MaterialTheme.typography.titleMedium,
+                                    fontWeight = FontWeight.Bold
+                                )
+                                IconButton(
+                                    onClick = { wishlistQuantity++ }
+                                ) {
+                                    Text(
+                                        text = "+",
+                                        style = MaterialTheme.typography.titleLarge,
+                                        color = MaterialTheme.colorScheme.primary
+                                    )
+                                }
+                            }
+                        }
+                        Button(
+                            onClick = { onAddToWishlist(wishlistQuantity) },
+                            modifier = Modifier.fillMaxWidth()
+                        ) {
+                            Text("Add to Wishlist")
+                        }
+                    }
+                }
             }
         }
 

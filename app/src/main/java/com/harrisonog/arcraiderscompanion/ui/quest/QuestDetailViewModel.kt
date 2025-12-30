@@ -7,6 +7,7 @@ import com.harrisonog.arcraiderscompanion.domain.model.QuestStatus
 import com.harrisonog.arcraiderscompanion.domain.model.RequiredItemWithInventory
 import com.harrisonog.arcraiderscompanion.domain.repository.InventoryRepository
 import com.harrisonog.arcraiderscompanion.domain.repository.QuestRepository
+import com.harrisonog.arcraiderscompanion.domain.repository.WishlistRepository
 import com.harrisonog.arcraiderscompanion.domain.util.Result
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -21,6 +22,7 @@ import javax.inject.Inject
 class QuestDetailViewModel @Inject constructor(
     private val questRepository: QuestRepository,
     private val inventoryRepository: InventoryRepository,
+    private val wishlistRepository: WishlistRepository,
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
@@ -99,6 +101,19 @@ class QuestDetailViewModel @Inject constructor(
 
         viewModelScope.launch {
             _uiState.update { it.copy(isUpdating = true) }
+
+            // Auto-add to wishlist when status changes to IN_PROGRESS
+            if (status == QuestStatus.IN_PROGRESS && currentQuest.requiredItems.isNotEmpty()) {
+                wishlistRepository.addQuestItemsToWishlist(
+                    questId = currentQuest.id,
+                    items = currentQuest.requiredItems
+                )
+            }
+
+            // Remove from wishlist when status changes to COMPLETED
+            if (status == QuestStatus.COMPLETED) {
+                wishlistRepository.removeQuestItemsFromWishlist(currentQuest.id)
+            }
 
             when (val result = questRepository.updateQuestStatus(questId, status)) {
                 is Result.Success -> {

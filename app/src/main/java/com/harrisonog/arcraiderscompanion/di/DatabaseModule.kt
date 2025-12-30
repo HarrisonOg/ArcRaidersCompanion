@@ -6,6 +6,7 @@ import com.harrisonog.arcraiderscompanion.data.local.AppDatabase
 import com.harrisonog.arcraiderscompanion.data.local.dao.InventoryDao
 import com.harrisonog.arcraiderscompanion.data.local.dao.ItemDao
 import com.harrisonog.arcraiderscompanion.data.local.dao.QuestDao
+import com.harrisonog.arcraiderscompanion.data.local.dao.WishlistDao
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -47,5 +48,11 @@ object DatabaseModule {
     @Singleton
     fun provideInventoryDao(database: AppDatabase): InventoryDao {
         return database.inventoryDao()
+    }
+
+    @Provides
+    @Singleton
+    fun provideWishlistDao(database: AppDatabase): WishlistDao {
+        return database.wishlistDao()
     }
 }

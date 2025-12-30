@@ -10,6 +10,7 @@ import com.harrisonog.arcraiderscompanion.ui.item.ItemDetailScreen
 import com.harrisonog.arcraiderscompanion.ui.item.ItemListScreen
 import com.harrisonog.arcraiderscompanion.ui.quest.QuestDetailScreen
 import com.harrisonog.arcraiderscompanion.ui.quest.QuestListScreen
+import com.harrisonog.arcraiderscompanion.ui.wishlist.WishlistListScreen
 
 @Composable
 fun NavGraph(
@@ -65,6 +66,17 @@ fun NavGraph(
             )
         ) {
             ItemDetailScreen(
+                onNavigateBack = {
+                    navController.navigateUp()
+                }
+            )
+        }
+
+        composable(Screen.WishlistList.route) {
+            WishlistListScreen(
+                onNavigateToItemDetail = { itemId ->
+                    navController.navigate(Screen.ItemDetail.createRoute(itemId))
+                },
                 onNavigateBack = {
                     navController.navigateUp()
                 }
