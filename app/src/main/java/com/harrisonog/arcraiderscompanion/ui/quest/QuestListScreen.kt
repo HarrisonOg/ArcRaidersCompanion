@@ -7,6 +7,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.FilterList
 import androidx.compose.material.icons.filled.Inventory
+import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -23,7 +24,8 @@ import com.harrisonog.arcraiderscompanion.domain.model.QuestStatus
 fun QuestListScreen(
     viewModel: QuestListViewModel = hiltViewModel(),
     onNavigateToQuestDetail: (String) -> Unit,
-    onNavigateToItemList: () -> Unit
+    onNavigateToItemList: () -> Unit,
+    onOpenDrawer: () -> Unit = {}
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     var showFilterMenu by remember { mutableStateOf(false) }
@@ -32,6 +34,14 @@ fun QuestListScreen(
         topBar = {
             TopAppBar(
                 title = { Text("Quests") },
+                navigationIcon = {
+                    IconButton(onClick = onOpenDrawer) {
+                        Icon(
+                            imageVector = Icons.Default.Menu,
+                            contentDescription = "Open menu"
+                        )
+                    }
+                },
                 actions = {
                     IconButton(onClick = onNavigateToItemList) {
                         Icon(

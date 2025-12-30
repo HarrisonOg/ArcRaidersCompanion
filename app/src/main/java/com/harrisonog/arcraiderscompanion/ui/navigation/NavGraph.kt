@@ -15,7 +15,8 @@ import com.harrisonog.arcraiderscompanion.ui.wishlist.WishlistListScreen
 @Composable
 fun NavGraph(
     navController: NavHostController,
-    startDestination: String = Screen.QuestList.route
+    startDestination: String = Screen.QuestList.route,
+    onOpenDrawer: () -> Unit = {}
 ) {
     NavHost(
         navController = navController,
@@ -28,7 +29,8 @@ fun NavGraph(
                 },
                 onNavigateToItemList = {
                     navController.navigate(Screen.ItemList.route)
-                }
+                },
+                onOpenDrawer = onOpenDrawer
             )
         }
 
@@ -55,7 +57,8 @@ fun NavGraph(
                 },
                 onNavigateBack = {
                     navController.navigateUp()
-                }
+                },
+                onOpenDrawer = onOpenDrawer
             )
         }
 
@@ -79,7 +82,8 @@ fun NavGraph(
                 },
                 onNavigateBack = {
                     navController.navigateUp()
-                }
+                },
+                onOpenDrawer = onOpenDrawer
             )
         }
     }

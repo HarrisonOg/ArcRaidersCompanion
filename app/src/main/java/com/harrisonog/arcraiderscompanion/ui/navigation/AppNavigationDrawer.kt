@@ -41,6 +41,23 @@ fun AppNavigationDrawer(
                 Spacer(modifier = Modifier.height(8.dp))
 
                 NavigationDrawerItem(
+                    icon = { Icon(Icons.Default.Star, contentDescription = null) },
+                    label = { Text("Wishlist") },
+                    selected = currentRoute == Screen.WishlistList.route,
+                    onClick = {
+                        scope.launch { drawerState.close() }
+                        navController.navigate(Screen.WishlistList.route) {
+                            popUpTo(navController.graph.startDestinationId) {
+                                saveState = true
+                            }
+                            launchSingleTop = true
+                            restoreState = true
+                        }
+                    },
+                    modifier = Modifier.padding(NavigationDrawerItemDefaults.ItemPadding)
+                )
+
+                NavigationDrawerItem(
                     icon = { Icon(Icons.AutoMirrored.Filled.Assignment, contentDescription = null) },
                     label = { Text("Quests") },
                     selected = currentRoute == Screen.QuestList.route || currentRoute?.startsWith("quest_") == true,
@@ -64,23 +81,6 @@ fun AppNavigationDrawer(
                     onClick = {
                         scope.launch { drawerState.close() }
                         navController.navigate(Screen.ItemList.route) {
-                            popUpTo(navController.graph.startDestinationId) {
-                                saveState = true
-                            }
-                            launchSingleTop = true
-                            restoreState = true
-                        }
-                    },
-                    modifier = Modifier.padding(NavigationDrawerItemDefaults.ItemPadding)
-                )
-
-                NavigationDrawerItem(
-                    icon = { Icon(Icons.Default.Star, contentDescription = null) },
-                    label = { Text("Wishlist") },
-                    selected = currentRoute == Screen.WishlistList.route,
-                    onClick = {
-                        scope.launch { drawerState.close() }
-                        navController.navigate(Screen.WishlistList.route) {
                             popUpTo(navController.graph.startDestinationId) {
                                 saveState = true
                             }
