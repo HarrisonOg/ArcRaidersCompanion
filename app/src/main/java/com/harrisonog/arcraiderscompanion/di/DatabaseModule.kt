@@ -5,6 +5,7 @@ import androidx.room.Room
 import com.harrisonog.arcraiderscompanion.data.local.AppDatabase
 import com.harrisonog.arcraiderscompanion.data.local.dao.InventoryDao
 import com.harrisonog.arcraiderscompanion.data.local.dao.ItemDao
+import com.harrisonog.arcraiderscompanion.data.local.dao.MapEventDao
 import com.harrisonog.arcraiderscompanion.data.local.dao.QuestDao
 import com.harrisonog.arcraiderscompanion.data.local.dao.WishlistDao
 import dagger.Module
@@ -54,5 +55,11 @@ object DatabaseModule {
     @Singleton
     fun provideWishlistDao(database: AppDatabase): WishlistDao {
         return database.wishlistDao()
+    }
+
+    @Provides
+    @Singleton
+    fun provideMapEventDao(database: AppDatabase): MapEventDao {
+        return database.mapEventDao()
     }
 }

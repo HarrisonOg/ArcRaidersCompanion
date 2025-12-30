@@ -8,6 +8,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import com.harrisonog.arcraiderscompanion.ui.item.ItemDetailScreen
 import com.harrisonog.arcraiderscompanion.ui.item.ItemListScreen
+import com.harrisonog.arcraiderscompanion.ui.mapevent.MapEventListScreen
 import com.harrisonog.arcraiderscompanion.ui.quest.QuestDetailScreen
 import com.harrisonog.arcraiderscompanion.ui.quest.QuestListScreen
 import com.harrisonog.arcraiderscompanion.ui.wishlist.WishlistListScreen
@@ -80,6 +81,15 @@ fun NavGraph(
                 onNavigateToItemDetail = { itemId ->
                     navController.navigate(Screen.ItemDetail.createRoute(itemId))
                 },
+                onNavigateBack = {
+                    navController.navigateUp()
+                },
+                onOpenDrawer = onOpenDrawer
+            )
+        }
+
+        composable(Screen.MapEventList.route) {
+            MapEventListScreen(
                 onNavigateBack = {
                     navController.navigateUp()
                 },

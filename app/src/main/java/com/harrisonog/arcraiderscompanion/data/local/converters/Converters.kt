@@ -106,4 +106,16 @@ class Converters {
     fun toItemRarity(value: String): ItemRarity {
         return ItemRarity.valueOf(value)
     }
+
+    // Event time converters
+    @TypeConverter
+    fun fromEventTimeList(value: List<EventTime>): String {
+        return gson.toJson(value)
+    }
+
+    @TypeConverter
+    fun toEventTimeList(value: String): List<EventTime> {
+        val type = object : TypeToken<List<EventTime>>() {}.type
+        return gson.fromJson(value, type)
+    }
 }

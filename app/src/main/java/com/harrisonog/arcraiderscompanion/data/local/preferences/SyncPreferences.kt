@@ -18,6 +18,7 @@ class SyncPreferences @Inject constructor(
 ) {
     private val lastQuestSyncKey = longPreferencesKey("last_quest_sync")
     private val lastItemSyncKey = longPreferencesKey("last_item_sync")
+    private val lastMapEventSyncKey = longPreferencesKey("last_map_event_sync")
 
     companion object {
         private const val THREE_WEEKS_IN_MILLIS = 21L * 24 * 60 * 60 * 1000 // 21 days
@@ -52,6 +53,23 @@ class SyncPreferences @Inject constructor(
 
     suspend fun shouldSyncItems(): Boolean {
         val lastSync = getLastItemSync()
+        if (lastSync == 0L) return true // Never synced before
+        val currentTime = System.currentTimeMillis()
+        return (currentTime - lastSync) >= THREE_WEEKS_IN_MILLIS
+    }
+
+    suspend fun getLastMapEventSync(): Long {
+        return context.dataStore.data.first()[lastMapEventSyncKey] ?: 0L
+    }
+
+    suspend fun setLastMapEventSync(timestamp: Long) {
+        context.dataStore.edit { preferences ->
+            preferences[lastMapEventSyncKey] = timestamp
+        }
+    }
+
+    suspend fun shouldSyncMapEvents(): Boolean {
+        val lastSync = getLastMapEventSync()
         if (lastSync == 0L) return true // Never synced before
         val currentTime = System.currentTimeMillis()
         return (currentTime - lastSync) >= THREE_WEEKS_IN_MILLIS

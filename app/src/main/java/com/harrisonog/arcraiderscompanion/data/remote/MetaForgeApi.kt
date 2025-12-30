@@ -31,6 +31,13 @@ interface MetaForgeApi {
         @Query("item_type") itemType: String? = null
     ): ItemsResponse
 
+    /**
+     * Get event timers
+     * Endpoint: /api/arc-raiders/event-timers
+     */
+    @GET("event-timers")
+    suspend fun getEventTimers(): EventTimersResponse
+
     companion object {
         const val BASE_URL = "https://metaforge.app/api/arc-raiders/"
     }

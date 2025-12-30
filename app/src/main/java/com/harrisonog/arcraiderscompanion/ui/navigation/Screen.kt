@@ -10,4 +10,5 @@ sealed class Screen(val route: String) {
         fun createRoute(itemId: String) = "item_detail/$itemId"
     }
     data object WishlistList : Screen("wishlist_list")
+    data object MapEventList : Screen("map_event_list")
 }
