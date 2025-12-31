@@ -28,15 +28,41 @@ class MapEventListViewModel @Inject constructor(
     fun onEvent(event: MapEventListEvent) {
         when (event) {
             is MapEventListEvent.RefreshMapEvents -> refreshMapEvents()
-            is MapEventListEvent.ToggleMapExpansion -> toggleMapExpansion(event.mapName)
         }
     }
 
     private fun loadMapEvents() {
         viewModelScope.launch {
-            mapEventRepository.getAllMapEvents().collect { events ->
-                val grouped = events.groupBy { it.map }.toSortedMap()
-                _uiState.update { it.copy(mapEventsGrouped = grouped) }
+            mapEventRepository.getAllMapEvents().collect { mapEvents ->
+                // Group by event name
+                val grouped = mapEvents.groupBy { it.name }
+
+                // Transform into EventGroup objects
+                val eventGroups = grouped.map { (eventName, events) ->
+                    val firstEvent = events.first()
+                    val mapOccurrences = events.map { event ->
+                        MapOccurrence(
+                            mapName = event.map,
+                            times = event.times
+                        )
+                    }
+
+                    // Check if any time in any map occurrence is upcoming
+                    val isUpcoming = events.any { event ->
+                        event.times.any { it.isUpcoming() }
+                    }
+
+                    EventGroup(
+                        id = firstEvent.id,
+                        name = eventName,
+                        description = firstEvent.description,
+                        iconUrl = firstEvent.iconUrl,
+                        mapOccurrences = mapOccurrences,
+                        isUpcoming = isUpcoming
+                    )
+                }.sortedBy { it.name }
+
+                _uiState.update { it.copy(events = eventGroups) }
             }
         }
     }
@@ -82,17 +108,6 @@ class MapEventListViewModel @Inject constructor(
                     // Already handled above
                 }
             }
-        }
-    }
-
-    private fun toggleMapExpansion(mapName: String) {
-        _uiState.update { currentState ->
-            val newExpandedMaps = if (mapName in currentState.expandedMaps) {
-                currentState.expandedMaps - mapName
-            } else {
-                currentState.expandedMaps + mapName
-            }
-            currentState.copy(expandedMaps = newExpandedMaps)
         }
     }
 }
