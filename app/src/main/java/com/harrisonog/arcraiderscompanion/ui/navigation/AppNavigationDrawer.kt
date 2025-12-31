@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.Assignment
+import androidx.compose.material.icons.filled.Build
 import androidx.compose.material.icons.filled.Event
 import androidx.compose.material.icons.filled.Inventory2
 import androidx.compose.material.icons.filled.Star
@@ -99,6 +100,23 @@ fun AppNavigationDrawer(
                     onClick = {
                         scope.launch { drawerState.close() }
                         navController.navigate(Screen.MapEventList.route) {
+                            popUpTo(navController.graph.startDestinationId) {
+                                saveState = true
+                            }
+                            launchSingleTop = true
+                            restoreState = true
+                        }
+                    },
+                    modifier = Modifier.padding(NavigationDrawerItemDefaults.ItemPadding)
+                )
+
+                NavigationDrawerItem(
+                    icon = { Icon(Icons.Default.Build, contentDescription = null) },
+                    label = { Text("Workshop Upgrades") },
+                    selected = currentRoute == Screen.WorkshopList.route || currentRoute?.startsWith("workshop_") == true,
+                    onClick = {
+                        scope.launch { drawerState.close() }
+                        navController.navigate(Screen.WorkshopList.route) {
                             popUpTo(navController.graph.startDestinationId) {
                                 saveState = true
                             }

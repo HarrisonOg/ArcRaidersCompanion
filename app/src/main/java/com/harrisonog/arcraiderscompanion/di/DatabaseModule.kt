@@ -8,6 +8,7 @@ import com.harrisonog.arcraiderscompanion.data.local.dao.ItemDao
 import com.harrisonog.arcraiderscompanion.data.local.dao.MapEventDao
 import com.harrisonog.arcraiderscompanion.data.local.dao.QuestDao
 import com.harrisonog.arcraiderscompanion.data.local.dao.WishlistDao
+import com.harrisonog.arcraiderscompanion.data.local.dao.WorkshopUpgradeDao
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -61,5 +62,11 @@ object DatabaseModule {
     @Singleton
     fun provideMapEventDao(database: AppDatabase): MapEventDao {
         return database.mapEventDao()
+    }
+
+    @Provides
+    @Singleton
+    fun provideWorkshopUpgradeDao(database: AppDatabase): WorkshopUpgradeDao {
+        return database.workshopUpgradeDao()
     }
 }

@@ -107,6 +107,16 @@ class Converters {
         return ItemRarity.valueOf(value)
     }
 
+    @TypeConverter
+    fun fromUpgradeStatus(value: UpgradeStatus): String {
+        return value.name
+    }
+
+    @TypeConverter
+    fun toUpgradeStatus(value: String): UpgradeStatus {
+        return UpgradeStatus.valueOf(value)
+    }
+
     // Event time converters
     @TypeConverter
     fun fromEventTimeList(value: List<EventTime>): String {

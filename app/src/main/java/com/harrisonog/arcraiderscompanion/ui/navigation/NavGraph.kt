@@ -113,5 +113,30 @@ fun NavGraph(
                 }
             )
         }
+
+        composable(Screen.WorkshopList.route) {
+            com.harrisonog.arcraiderscompanion.ui.workshop.WorkshopListScreen(
+                onNavigateToUpgradeDetail = { levelId ->
+                    navController.navigate(Screen.WorkshopDetail.createRoute(levelId))
+                },
+                onOpenDrawer = onOpenDrawer
+            )
+        }
+
+        composable(
+            route = Screen.WorkshopDetail.route,
+            arguments = listOf(
+                navArgument("levelId") { type = NavType.StringType }
+            )
+        ) {
+            com.harrisonog.arcraiderscompanion.ui.workshop.WorkshopDetailScreen(
+                onNavigateBack = {
+                    navController.navigateUp()
+                },
+                onNavigateToItem = { itemId ->
+                    navController.navigate(Screen.ItemDetail.createRoute(itemId))
+                }
+            )
+        }
     }
 }
