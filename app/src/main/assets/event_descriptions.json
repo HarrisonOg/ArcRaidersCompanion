@@ -1,0 +1,16 @@
+{
+  "descriptions": [
+    { "name": "Prospecting Probes", "description": "ARC seem to have entered a period of extended probing, sending guarded probes down en masse." },
+    { "name": "Harvester", "description": "A mysterious harvesting machine has appeared, heavily guarded by the feared Queen. What kind of riches are to be found within?" },
+    { "name": "Uncovered Caches", "description": "Storms have unearthed a number of old Raider Caches, but they are rigged to explode should they be exposed for too long. Hurry up and find them all." },
+    { "name": "Husk Graveyard", "description": "Something has caused ARC machines to go down on their own in great amounts, leaving husks scattered around the Topside. A better opportunity to gather information and parts has rarely presented itself." },
+    { "name": "Launch Tower Loot", "description": "Someone has locked off the Launch Tower, hiding all their hard-earned loot at the top. ARC seems to have ramped up their defenses in response to the heightened activity." },
+    { "name": "Lush Blooms", "description": "The weather has been unusually agreeable lately, and vital plants and fruits have been thriving. Get out there and gather your food before it is all gone." },
+    { "name": "Night Raid", "description": "Darkness has fallen and the machines lurking in the shadows. High-tier loot can be scavenged for those brave enough to take the risk—but watch your back, the heightened Raider activity has attracted more ARC than usual." },
+    { "name": "Electromagnetic Storm", "description": "Lightning strikes batter the surface; frying electronics, disrupting ARC machines, and electrocuting unsuspecting Raiders." },
+    { "name": "Hidden Bunker", "description": "Someone has hacked the Outskirts Bunker's security system. Find the 4 buttons to unlock the doors, and be the first to plunder the treasure within." },
+    { "name": "Locked Gate", "description": "A clandestine group has activated the Gate's emergency shutdown protocol. 4 key cards need to be obtained to override it, and uncover whatever they're hiding." },
+    { "name": "Cold Snap", "description": "A cold front has swept in with snowfall, and a considerable drop in temperature. The air might feel crisp and brisk at first, but beware of frostbite. Candleberry bushes are bearing valuable fruit - they are now ripe for the picking." },
+    { "name": "Matriarch", "description": "A Matriarch boss spawns somewhere on the map. Tough fight, big rewards." }
+  ]
+}
