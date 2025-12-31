@@ -1,5 +1,6 @@
 package com.harrisonog.arcraiderscompanion.data.mapper
 
+import com.harrisonog.arcraiderscompanion.data.local.EventDescriptionProvider
 import com.harrisonog.arcraiderscompanion.data.remote.EventDto
 import com.harrisonog.arcraiderscompanion.data.remote.EventTimeDto
 import com.harrisonog.arcraiderscompanion.domain.model.EventTime
@@ -8,8 +9,10 @@ import com.harrisonog.arcraiderscompanion.domain.model.MapEvent
 /**
  * Converts EventDto to MapEvent domain model
  * Returns null if required fields (name, map) are missing
+ *
+ * @param descriptionProvider Provider for local event descriptions from assets
  */
-fun EventDto.toDomain(): MapEvent? {
+fun EventDto.toDomain(descriptionProvider: EventDescriptionProvider): MapEvent? {
     val eventName = name ?: return null
     val mapName = map ?: return null
 
@@ -24,7 +27,8 @@ fun EventDto.toDomain(): MapEvent? {
         name = eventName,
         map = mapName,
         iconUrl = icon,
-        description = description?.takeIf { it.isNotBlank() },
+        description = description?.takeIf { it.isNotBlank() }
+            ?: descriptionProvider.getDescription(eventName),
         times = eventTimes
     )
 }

@@ -1,5 +1,6 @@
 package com.harrisonog.arcraiderscompanion.data.repository
 
+import com.harrisonog.arcraiderscompanion.data.local.EventDescriptionProvider
 import com.harrisonog.arcraiderscompanion.data.local.dao.MapEventDao
 import com.harrisonog.arcraiderscompanion.data.local.entity.toDomain
 import com.harrisonog.arcraiderscompanion.data.local.entity.toEntity
@@ -18,7 +19,8 @@ import javax.inject.Singleton
 class MapEventRepositoryImpl @Inject constructor(
     private val api: MetaForgeApi,
     private val mapEventDao: MapEventDao,
-    private val syncPreferences: SyncPreferences
+    private val syncPreferences: SyncPreferences,
+    private val eventDescriptionProvider: EventDescriptionProvider
 ) : MapEventRepository {
 
     override fun getAllMapEvents(): Flow<List<MapEvent>> {
@@ -37,7 +39,7 @@ class MapEventRepositoryImpl @Inject constructor(
         return try {
             val response = api.getEventTimers()
             val eventDtos = response.data ?: emptyList()
-            val events = eventDtos.mapNotNull { it.toDomain() }
+            val events = eventDtos.mapNotNull { it.toDomain(eventDescriptionProvider) }
 
             // Clear existing data and insert new data
             mapEventDao.deleteAllMapEvents()
