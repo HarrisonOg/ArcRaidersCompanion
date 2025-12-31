@@ -5,11 +5,13 @@ import com.harrisonog.arcraiderscompanion.data.repository.ItemRepositoryImpl
 import com.harrisonog.arcraiderscompanion.data.repository.MapEventRepositoryImpl
 import com.harrisonog.arcraiderscompanion.data.repository.QuestRepositoryImpl
 import com.harrisonog.arcraiderscompanion.data.repository.WishlistRepositoryImpl
+import com.harrisonog.arcraiderscompanion.data.repository.WorkshopUpgradeRepositoryImpl
 import com.harrisonog.arcraiderscompanion.domain.repository.InventoryRepository
 import com.harrisonog.arcraiderscompanion.domain.repository.ItemRepository
 import com.harrisonog.arcraiderscompanion.domain.repository.MapEventRepository
 import com.harrisonog.arcraiderscompanion.domain.repository.QuestRepository
 import com.harrisonog.arcraiderscompanion.domain.repository.WishlistRepository
+import com.harrisonog.arcraiderscompanion.domain.repository.WorkshopUpgradeRepository
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -49,4 +51,10 @@ abstract class RepositoryModule {
     abstract fun bindMapEventRepository(
         mapEventRepositoryImpl: MapEventRepositoryImpl
     ): MapEventRepository
+
+    @Binds
+    @Singleton
+    abstract fun bindWorkshopUpgradeRepository(
+        workshopUpgradeRepositoryImpl: WorkshopUpgradeRepositoryImpl
+    ): WorkshopUpgradeRepository
 }

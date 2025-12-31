@@ -137,6 +137,55 @@ class WishlistRepositoryImpl @Inject constructor(
         }
     }
 
+    override suspend fun addWorkshopItemsToWishlist(upgradeId: String, items: List<RequiredItem>): Result<Unit> {
+        return try {
+            // Prefix with "workshop_" to distinguish from quest IDs
+            val workshopId = "workshop_$upgradeId"
+            items.forEach { requiredItem ->
+                addToWishlist(
+                    itemId = requiredItem.itemId,
+                    itemName = requiredItem.itemName,
+                    quantity = requiredItem.quantity,
+                    imageUrl = requiredItem.imageUrl,
+                    isManual = false,
+                    questId = workshopId
+                )
+            }
+            Result.Success(Unit)
+        } catch (e: Exception) {
+            Result.Error(e)
+        }
+    }
+
+    override suspend fun removeWorkshopItemsFromWishlist(upgradeId: String): Result<Unit> {
+        return try {
+            val workshopId = "workshop_$upgradeId"
+            val allWishlist = wishlistDao.getAllWishlistItems().first()
+
+            allWishlist.forEach { item ->
+                if (item.relatedQuestIds.contains(workshopId)) {
+                    val updatedQuestIds = item.relatedQuestIds - workshopId
+
+                    // If no more quests/upgrades need it AND it wasn't manually added, remove
+                    if (updatedQuestIds.isEmpty() && !item.isManual) {
+                        wishlistDao.deleteWishlistItem(item)
+                    } else {
+                        // Keep the item but remove the workshop reference
+                        wishlistDao.updateWishlistItem(
+                            item.copy(
+                                relatedQuestIds = updatedQuestIds,
+                                lastUpdated = System.currentTimeMillis()
+                            )
+                        )
+                    }
+                }
+            }
+            Result.Success(Unit)
+        } catch (e: Exception) {
+            Result.Error(e)
+        }
+    }
+
     override suspend fun getWishlistItemCount(): Int {
         return wishlistDao.getWishlistItemCount()
     }

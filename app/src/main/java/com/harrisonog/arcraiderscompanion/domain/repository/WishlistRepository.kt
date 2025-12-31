@@ -27,5 +27,9 @@ interface WishlistRepository {
 
     suspend fun removeQuestItemsFromWishlist(questId: String): Result<Unit>
 
+    suspend fun addWorkshopItemsToWishlist(upgradeId: String, items: List<RequiredItem>): Result<Unit>
+
+    suspend fun removeWorkshopItemsFromWishlist(upgradeId: String): Result<Unit>
+
     suspend fun getWishlistItemCount(): Int
 }

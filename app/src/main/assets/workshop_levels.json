@@ -1,0 +1,379 @@
+{
+  "workshopStations": [
+    {
+      "stationId": "gunsmith",
+      "stationName": "Gunsmith",
+      "description": "Craft and upgrade firearms and weapon modifications",
+      "imageUrl": null,
+      "levels": [
+        {
+          "levelId": "gunsmith_level_1",
+          "stationId": "gunsmith",
+          "levelNumber": 1,
+          "name": "Gunsmith Level 1",
+          "description": "Unlock basic weapon crafting capabilities",
+          "requiredItems": [
+            {"itemId": "metal_parts", "itemName": "Metal Parts", "quantity": 20, "imageUrl": null},
+            {"itemId": "rubber_parts", "itemName": "Rubber Parts", "quantity": 30, "imageUrl": null}
+          ],
+          "rewards": [{"itemId": null, "itemName": "Basic Weapon Crafting", "quantity": 1, "imageUrl": null, "type": "UNLOCK"}],
+          "unlocks": "Basic weapon crafting and modifications",
+          "status": "NOT_STARTED",
+          "imageUrl": null
+        },
+        {
+          "levelId": "gunsmith_level_2",
+          "stationId": "gunsmith",
+          "levelNumber": 2,
+          "name": "Gunsmith Level 2",
+          "description": "Unlock advanced weapon modifications",
+          "requiredItems": [
+            {"itemId": "rusted_tools", "itemName": "Rusted Tools", "quantity": 3, "imageUrl": null},
+            {"itemId": "mechanical_components", "itemName": "Mechanical Components", "quantity": 5, "imageUrl": null},
+            {"itemId": "wasp_drivers", "itemName": "Wasp Drivers", "quantity": 8, "imageUrl": null}
+          ],
+          "rewards": [{"itemId": null, "itemName": "Advanced Weapon Mods", "quantity": 1, "imageUrl": null, "type": "UNLOCK"}],
+          "unlocks": "Advanced weapon modifications and attachments",
+          "status": "LOCKED",
+          "imageUrl": null
+        },
+        {
+          "levelId": "gunsmith_level_3",
+          "stationId": "gunsmith",
+          "levelNumber": 3,
+          "name": "Gunsmith Level 3",
+          "description": "Master-level weapon crafting",
+          "requiredItems": [
+            {"itemId": "rusted_gears", "itemName": "Rusted Gears", "quantity": 3, "imageUrl": null},
+            {"itemId": "advanced_mechanical_components", "itemName": "Advanced Mechanical Components", "quantity": 5, "imageUrl": null},
+            {"itemId": "sentinel_firing_cores", "itemName": "Sentinel Firing Cores", "quantity": 4, "imageUrl": null}
+          ],
+          "rewards": [{"itemId": null, "itemName": "Master Weapon Crafting", "quantity": 1, "imageUrl": null, "type": "UNLOCK"}],
+          "unlocks": "Master-level weapon crafting and rare modifications",
+          "status": "LOCKED",
+          "imageUrl": null
+        }
+      ]
+    },
+    {
+      "stationId": "gear_bench",
+      "stationName": "Gear Bench",
+      "description": "Craft and upgrade armor and protective gear",
+      "imageUrl": null,
+      "levels": [
+        {
+          "levelId": "gear_bench_level_1",
+          "stationId": "gear_bench",
+          "levelNumber": 1,
+          "name": "Gear Bench Level 1",
+          "description": "Unlock basic armor crafting",
+          "requiredItems": [
+            {"itemId": "plastic_parts", "itemName": "Plastic Parts", "quantity": 25, "imageUrl": null},
+            {"itemId": "fabric", "itemName": "Fabric", "quantity": 30, "imageUrl": null}
+          ],
+          "rewards": [{"itemId": null, "itemName": "Basic Armor Crafting", "quantity": 1, "imageUrl": null, "type": "UNLOCK"}],
+          "unlocks": "Basic armor and gear crafting",
+          "status": "NOT_STARTED",
+          "imageUrl": null
+        },
+        {
+          "levelId": "gear_bench_level_2",
+          "stationId": "gear_bench",
+          "levelNumber": 2,
+          "name": "Gear Bench Level 2",
+          "description": "Unlock heavy shields and advanced armor",
+          "requiredItems": [
+            {"itemId": "power_cables", "itemName": "Power Cables", "quantity": 3, "imageUrl": null},
+            {"itemId": "electrical_components", "itemName": "Electrical Components", "quantity": 5, "imageUrl": null},
+            {"itemId": "hornet_drivers", "itemName": "Hornet Drivers", "quantity": 5, "imageUrl": null}
+          ],
+          "rewards": [{"itemId": null, "itemName": "Heavy Shield Access", "quantity": 1, "imageUrl": null, "type": "UNLOCK"}],
+          "unlocks": "Heavy shields and advanced armor pieces",
+          "status": "LOCKED",
+          "imageUrl": null
+        },
+        {
+          "levelId": "gear_bench_level_3",
+          "stationId": "gear_bench",
+          "levelNumber": 3,
+          "name": "Gear Bench Level 3",
+          "description": "Unlock elite augments and armor",
+          "requiredItems": [
+            {"itemId": "industrial_batteries", "itemName": "Industrial Batteries", "quantity": 3, "imageUrl": null},
+            {"itemId": "advanced_electrical_components", "itemName": "Advanced Electrical Components", "quantity": 5, "imageUrl": null},
+            {"itemId": "bastion_cells", "itemName": "Bastion Cells", "quantity": 6, "imageUrl": null}
+          ],
+          "rewards": [{"itemId": null, "itemName": "Elite Augments", "quantity": 1, "imageUrl": null, "type": "UNLOCK"}],
+          "unlocks": "Elite augments and top-tier armor",
+          "status": "LOCKED",
+          "imageUrl": null
+        }
+      ]
+    },
+    {
+      "stationId": "medical_lab",
+      "stationName": "Medical Lab",
+      "description": "Craft medical supplies and healing items",
+      "imageUrl": null,
+      "levels": [
+        {
+          "levelId": "medical_lab_level_1",
+          "stationId": "medical_lab",
+          "levelNumber": 1,
+          "name": "Medical Lab Level 1",
+          "description": "Unlock basic healing item crafting",
+          "requiredItems": [
+            {"itemId": "organic_compounds", "itemName": "Organic Compounds", "quantity": 20, "imageUrl": null},
+            {"itemId": "glass_vials", "itemName": "Glass Vials", "quantity": 15, "imageUrl": null}
+          ],
+          "rewards": [{"itemId": null, "itemName": "Basic Healing Items", "quantity": 1, "imageUrl": null, "type": "UNLOCK"}],
+          "unlocks": "Basic healing items and stims",
+          "status": "NOT_STARTED",
+          "imageUrl": null
+        },
+        {
+          "levelId": "medical_lab_level_2",
+          "stationId": "medical_lab",
+          "levelNumber": 2,
+          "name": "Medical Lab Level 2",
+          "description": "Unlock advanced medical supplies",
+          "requiredItems": [
+            {"itemId": "medical_compounds", "itemName": "Medical Compounds", "quantity": 10, "imageUrl": null},
+            {"itemId": "synthesis_catalysts", "itemName": "Synthesis Catalysts", "quantity": 5, "imageUrl": null}
+          ],
+          "rewards": [{"itemId": null, "itemName": "Advanced Medkits", "quantity": 1, "imageUrl": null, "type": "UNLOCK"}],
+          "unlocks": "Advanced medkits and revival items",
+          "status": "LOCKED",
+          "imageUrl": null
+        },
+        {
+          "levelId": "medical_lab_level_3",
+          "stationId": "medical_lab",
+          "levelNumber": 3,
+          "name": "Medical Lab Level 3",
+          "description": "Unlock combat stimulants and rare medicines",
+          "requiredItems": [
+            {"itemId": "rare_biologicals", "itemName": "Rare Biologicals", "quantity": 8, "imageUrl": null},
+            {"itemId": "advanced_catalysts", "itemName": "Advanced Catalysts", "quantity": 4, "imageUrl": null}
+          ],
+          "rewards": [{"itemId": null, "itemName": "Combat Stimulants", "quantity": 1, "imageUrl": null, "type": "UNLOCK"}],
+          "unlocks": "Combat stimulants and rare medical items",
+          "status": "LOCKED",
+          "imageUrl": null
+        }
+      ]
+    },
+    {
+      "stationId": "explosives_station",
+      "stationName": "Explosives Station",
+      "description": "Craft explosives and throwable items",
+      "imageUrl": null,
+      "levels": [
+        {
+          "levelId": "explosives_station_level_1",
+          "stationId": "explosives_station",
+          "levelNumber": 1,
+          "name": "Explosives Station Level 1",
+          "description": "Unlock basic explosives crafting",
+          "requiredItems": [
+            {"itemId": "chemical_compounds", "itemName": "Chemical Compounds", "quantity": 20, "imageUrl": null},
+            {"itemId": "detonators", "itemName": "Detonators", "quantity": 10, "imageUrl": null}
+          ],
+          "rewards": [{"itemId": null, "itemName": "Basic Explosives", "quantity": 1, "imageUrl": null, "type": "UNLOCK"}],
+          "unlocks": "Basic grenades and explosive devices",
+          "status": "NOT_STARTED",
+          "imageUrl": null
+        },
+        {
+          "levelId": "explosives_station_level_2",
+          "stationId": "explosives_station",
+          "levelNumber": 2,
+          "name": "Explosives Station Level 2",
+          "description": "Unlock advanced explosive devices",
+          "requiredItems": [
+            {"itemId": "refined_explosives", "itemName": "Refined Explosives", "quantity": 12, "imageUrl": null},
+            {"itemId": "proximity_sensors", "itemName": "Proximity Sensors", "quantity": 8, "imageUrl": null}
+          ],
+          "rewards": [{"itemId": null, "itemName": "Advanced Explosives", "quantity": 1, "imageUrl": null, "type": "UNLOCK"}],
+          "unlocks": "Proximity mines and advanced grenades",
+          "status": "LOCKED",
+          "imageUrl": null
+        },
+        {
+          "levelId": "explosives_station_level_3",
+          "stationId": "explosives_station",
+          "levelNumber": 3,
+          "name": "Explosives Station Level 3",
+          "description": "Unlock tactical explosives and demolition charges",
+          "requiredItems": [
+            {"itemId": "military_grade_explosives", "itemName": "Military Grade Explosives", "quantity": 6, "imageUrl": null},
+            {"itemId": "advanced_detonators", "itemName": "Advanced Detonators", "quantity": 5, "imageUrl": null}
+          ],
+          "rewards": [{"itemId": null, "itemName": "Tactical Explosives", "quantity": 1, "imageUrl": null, "type": "UNLOCK"}],
+          "unlocks": "Tactical explosives and demolition charges",
+          "status": "LOCKED",
+          "imageUrl": null
+        }
+      ]
+    },
+    {
+      "stationId": "utility_station",
+      "stationName": "Utility Station",
+      "description": "Craft utility items and tools",
+      "imageUrl": null,
+      "levels": [
+        {
+          "levelId": "utility_station_level_1",
+          "stationId": "utility_station",
+          "levelNumber": 1,
+          "name": "Utility Station Level 1",
+          "description": "Unlock basic utility item crafting",
+          "requiredItems": [
+            {"itemId": "scrap_metal", "itemName": "Scrap Metal", "quantity": 25, "imageUrl": null},
+            {"itemId": "wiring", "itemName": "Wiring", "quantity": 20, "imageUrl": null}
+          ],
+          "rewards": [{"itemId": null, "itemName": "Basic Utilities", "quantity": 1, "imageUrl": null, "type": "UNLOCK"}],
+          "unlocks": "Basic utility items and tools",
+          "status": "NOT_STARTED",
+          "imageUrl": null
+        },
+        {
+          "levelId": "utility_station_level_2",
+          "stationId": "utility_station",
+          "levelNumber": 2,
+          "name": "Utility Station Level 2",
+          "description": "Unlock tactical equipment",
+          "requiredItems": [
+            {"itemId": "tactical_components", "itemName": "Tactical Components", "quantity": 10, "imageUrl": null},
+            {"itemId": "fiber_optics", "itemName": "Fiber Optics", "quantity": 8, "imageUrl": null}
+          ],
+          "rewards": [{"itemId": null, "itemName": "Tactical Equipment", "quantity": 1, "imageUrl": null, "type": "UNLOCK"}],
+          "unlocks": "Cloaking devices and ziplines",
+          "status": "LOCKED",
+          "imageUrl": null
+        },
+        {
+          "levelId": "utility_station_level_3",
+          "stationId": "utility_station",
+          "levelNumber": 3,
+          "name": "Utility Station Level 3",
+          "description": "Unlock advanced tactical tools",
+          "requiredItems": [
+            {"itemId": "advanced_tactical_gear", "itemName": "Advanced Tactical Gear", "quantity": 7, "imageUrl": null},
+            {"itemId": "quantum_processors", "itemName": "Quantum Processors", "quantity": 4, "imageUrl": null}
+          ],
+          "rewards": [{"itemId": null, "itemName": "Advanced Tactical Tools", "quantity": 1, "imageUrl": null, "type": "UNLOCK"}],
+          "unlocks": "Advanced tactical tools and reconnaissance equipment",
+          "status": "LOCKED",
+          "imageUrl": null
+        }
+      ]
+    },
+    {
+      "stationId": "refiner",
+      "stationName": "Refiner",
+      "description": "Process and refine raw materials",
+      "imageUrl": null,
+      "levels": [
+        {
+          "levelId": "refiner_level_1",
+          "stationId": "refiner",
+          "levelNumber": 1,
+          "name": "Refiner Level 1",
+          "description": "Unlock basic material processing",
+          "requiredItems": [
+            {"itemId": "raw_ore", "itemName": "Raw Ore", "quantity": 30, "imageUrl": null},
+            {"itemId": "processing_catalysts", "itemName": "Processing Catalysts", "quantity": 15, "imageUrl": null}
+          ],
+          "rewards": [{"itemId": null, "itemName": "Basic Refinement", "quantity": 1, "imageUrl": null, "type": "UNLOCK"}],
+          "unlocks": "Basic material refinement capabilities",
+          "status": "NOT_STARTED",
+          "imageUrl": null
+        },
+        {
+          "levelId": "refiner_level_2",
+          "stationId": "refiner",
+          "levelNumber": 2,
+          "name": "Refiner Level 2",
+          "description": "Unlock advanced material processing",
+          "requiredItems": [
+            {"itemId": "refined_metals", "itemName": "Refined Metals", "quantity": 15, "imageUrl": null},
+            {"itemId": "purification_agents", "itemName": "Purification Agents", "quantity": 10, "imageUrl": null}
+          ],
+          "rewards": [{"itemId": null, "itemName": "Advanced Refinement", "quantity": 1, "imageUrl": null, "type": "UNLOCK"}],
+          "unlocks": "Advanced material processing and conversion",
+          "status": "LOCKED",
+          "imageUrl": null
+        },
+        {
+          "levelId": "refiner_level_3",
+          "stationId": "refiner",
+          "levelNumber": 3,
+          "name": "Refiner Level 3",
+          "description": "Unlock rare material synthesis",
+          "requiredItems": [
+            {"itemId": "exotic_alloys", "itemName": "Exotic Alloys", "quantity": 8, "imageUrl": null},
+            {"itemId": "synthesis_matrix", "itemName": "Synthesis Matrix", "quantity": 5, "imageUrl": null}
+          ],
+          "rewards": [{"itemId": null, "itemName": "Rare Material Synthesis", "quantity": 1, "imageUrl": null, "type": "UNLOCK"}],
+          "unlocks": "Rare material synthesis and advanced component crafting",
+          "status": "LOCKED",
+          "imageUrl": null
+        }
+      ]
+    },
+    {
+      "stationId": "scrappy",
+      "stationName": "Scrappy",
+      "description": "Your NPC companion with unique upgrade abilities",
+      "imageUrl": null,
+      "levels": [
+        {
+          "levelId": "scrappy_level_1",
+          "stationId": "scrappy",
+          "levelNumber": 1,
+          "name": "Scrappy Level 1",
+          "description": "Upgrade Scrappy's basic functionality",
+          "requiredItems": [
+            {"itemId": "robot_parts", "itemName": "Robot Parts", "quantity": 20, "imageUrl": null},
+            {"itemId": "ai_chips", "itemName": "AI Chips", "quantity": 5, "imageUrl": null}
+          ],
+          "rewards": [{"itemId": null, "itemName": "Passive Material Delivery", "quantity": 1, "imageUrl": null, "type": "UNLOCK"}],
+          "unlocks": "Scrappy delivers basic materials periodically",
+          "status": "NOT_STARTED",
+          "imageUrl": null
+        },
+        {
+          "levelId": "scrappy_level_2",
+          "stationId": "scrappy",
+          "levelNumber": 2,
+          "name": "Scrappy Level 2",
+          "description": "Improve Scrappy's delivery frequency and quality",
+          "requiredItems": [
+            {"itemId": "advanced_robotics", "itemName": "Advanced Robotics", "quantity": 10, "imageUrl": null},
+            {"itemId": "memory_cores", "itemName": "Memory Cores", "quantity": 6, "imageUrl": null}
+          ],
+          "rewards": [{"itemId": null, "itemName": "Enhanced Delivery", "quantity": 1, "imageUrl": null, "type": "UNLOCK"}],
+          "unlocks": "Increased delivery frequency and better materials",
+          "status": "LOCKED",
+          "imageUrl": null
+        },
+        {
+          "levelId": "scrappy_level_3",
+          "stationId": "scrappy",
+          "levelNumber": 3,
+          "name": "Scrappy Level 3",
+          "description": "Maximize Scrappy's capabilities",
+          "requiredItems": [
+            {"itemId": "quantum_ai_cores", "itemName": "Quantum AI Cores", "quantity": 4, "imageUrl": null},
+            {"itemId": "nano_assemblers", "itemName": "Nano Assemblers", "quantity": 3, "imageUrl": null}
+          ],
+          "rewards": [{"itemId": null, "itemName": "Maximum Delivery", "quantity": 1, "imageUrl": null, "type": "UNLOCK"}],
+          "unlocks": "Maximum delivery frequency with rare materials",
+          "status": "LOCKED",
+          "imageUrl": null
+        }
+      ]
+    }
+  ]
+}
