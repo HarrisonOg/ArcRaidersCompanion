@@ -44,6 +44,11 @@ class ItemDetailViewModel @Inject constructor(
         viewModelScope.launch {
             _uiState.update { it.copy(isLoading = true) }
 
+            // Defensive: ensure items are synced before loading
+            // This handles edge case where user navigates before app initialization completes
+            // Smart sync: no-op if items already synced (< 21 days)
+            itemRepository.syncItems()
+
             combine(
                 itemRepository.getItemById(itemId),
                 inventoryRepository.getInventoryItem(itemId),

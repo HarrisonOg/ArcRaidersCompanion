@@ -13,6 +13,8 @@ import com.harrisonog.arcraiderscompanion.domain.repository.ItemRepository
 import com.harrisonog.arcraiderscompanion.domain.util.Result
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.sync.Mutex
+import kotlinx.coroutines.sync.withLock
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -22,6 +24,8 @@ class ItemRepositoryImpl @Inject constructor(
     private val itemDao: ItemDao,
     private val syncPreferences: SyncPreferences
 ) : ItemRepository {
+
+    private val syncMutex = Mutex()
 
     override fun getAllItems(): Flow<List<Item>> {
         return itemDao.getAllItems().map { entities ->
@@ -94,14 +98,16 @@ class ItemRepositoryImpl @Inject constructor(
     }
 
     override suspend fun syncItems(): Result<Unit> {
-        // Check if we should sync based on time or empty database
-        val shouldSync = syncPreferences.shouldSyncItems()
-        val itemCount = itemDao.getItemCount()
+        return syncMutex.withLock {
+            // Check if we should sync based on time or empty database
+            val shouldSync = syncPreferences.shouldSyncItems()
+            val itemCount = itemDao.getItemCount()
 
-        return if (shouldSync || itemCount == 0) {
-            refreshItems()
-        } else {
-            Result.Success(Unit)
+            if (shouldSync || itemCount == 0) {
+                refreshItems()
+            } else {
+                Result.Success(Unit)
+            }
         }
     }
 }
