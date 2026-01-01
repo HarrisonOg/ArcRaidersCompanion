@@ -252,15 +252,15 @@
           "description": "Unlock basic healing item crafting",
           "requiredItems": [
             {
-              "itemId": "organic-compounds",
-              "itemName": "Organic Compounds",
-              "quantity": 20,
+              "itemId": "fabric",
+              "itemName": "Fabric",
+              "quantity": 50,
               "imageUrl": null
             },
             {
-              "itemId": "glass-vials",
-              "itemName": "Glass Vials",
-              "quantity": 15,
+              "itemId": "arc-alloy",
+              "itemName": "Arc Alloy",
+              "quantity": 6,
               "imageUrl": null
             }
           ],
@@ -285,15 +285,21 @@
           "description": "Unlock advanced medical supplies",
           "requiredItems": [
             {
-              "itemId": "medical-compounds",
-              "itemName": "Medical Compounds",
-              "quantity": 10,
+              "itemId": "cracked-bioscanner",
+              "itemName": "Cracked Bioscanner",
+              "quantity": 2,
+              "imageUrl": null
+            },
+	    {
+              "itemId": "durable-cloth",
+              "itemName": "Durable Cloth",
+              "quantity": 5,
               "imageUrl": null
             },
             {
-              "itemId": "synthesis-catalysts",
-              "itemName": "Synthesis Catalysts",
-              "quantity": 5,
+              "itemId": "tick-pod",
+              "itemName": "Tick Pod",
+              "quantity": 8,
               "imageUrl": null
             }
           ],
@@ -318,15 +324,21 @@
           "description": "Unlock combat stimulants and rare medicines",
           "requiredItems": [
             {
-              "itemId": "rare-biologicals",
-              "itemName": "Rare Biologicals",
+              "itemId": "rusted-shut-medical-kit",
+              "itemName": "Rusted Shut Medical Kit",
+              "quantity": 2,
+              "imageUrl": null
+            },
+	    {
+              "itemId": "antiseptic",
+              "itemName": "Antiseptic",
               "quantity": 8,
               "imageUrl": null
             },
             {
-              "itemId": "advanced-catalysts",
-              "itemName": "Advanced Catalysts",
-              "quantity": 4,
+              "itemId": "surveyor-vault",
+              "itemName": "Surveyor Vault",
+              "quantity": 5,
               "imageUrl": null
             }
           ],
@@ -359,14 +371,14 @@
           "description": "Unlock basic explosives crafting",
           "requiredItems": [
             {
-              "itemId": "chemical-compounds",
-              "itemName": "Chemical Compounds",
-              "quantity": 20,
+              "itemId": "chemicals",
+              "itemName": "Chemicals",
+              "quantity": 50,
               "imageUrl": null
             },
             {
-              "itemId": "detonators",
-              "itemName": "Detonators",
+              "itemId": "arc-alloy",
+              "itemName": "Arc Alloy",
               "quantity": 10,
               "imageUrl": null
             }
@@ -392,15 +404,21 @@
           "description": "Unlock advanced explosive devices",
           "requiredItems": [
             {
-              "itemId": "refined-explosives",
-              "itemName": "Refined Explosives",
-              "quantity": 12,
+              "itemId": "synthesized-fuel",
+              "itemName": "Synthesized Fuel",
+              "quantity": 3,
+              "imageUrl": null
+            },
+	    {
+              "itemId": "crude-explosives",
+              "itemName": "Crude Explosives",
+              "quantity": 5,
               "imageUrl": null
             },
             {
-              "itemId": "proximity-sensors",
-              "itemName": "Proximity Sensors",
-              "quantity": 8,
+              "itemId": "pop-trigger",
+              "itemName": "Pop Trigger",
+              "quantity": 5,
               "imageUrl": null
             }
           ],
@@ -425,15 +443,21 @@
           "description": "Unlock tactical explosives and demolition charges",
           "requiredItems": [
             {
-              "itemId": "military-grade-explosives",
-              "itemName": "Military Grade Explosives",
-              "quantity": 6,
+              "itemId": "laboratory-reagents",
+              "itemName": "Laboratory Reagents",
+              "quantity": 3,
+              "imageUrl": null
+            },
+	    {
+              "itemId": "explosive-compound",
+              "itemName": "Explosive Compound",
+              "quantity": 5,
               "imageUrl": null
             },
             {
-              "itemId": "advanced-detonators",
-              "itemName": "Advanced Detonators",
-              "quantity": 5,
+              "itemId": "rocketeer-driver",
+              "itemName": "Rocketeer Driver",
+              "quantity": 3F,
               "imageUrl": null
             }
           ],
@@ -573,15 +597,15 @@
           "description": "Unlock basic material processing",
           "requiredItems": [
             {
-              "itemId": "raw-ore",
-              "itemName": "Raw Ore",
-              "quantity": 30,
+              "itemId": "metal-parts",
+              "itemName": "Metal Parts",
+              "quantity": 60,
               "imageUrl": null
             },
             {
-              "itemId": "processing-catalysts",
-              "itemName": "Processing Catalysts",
-              "quantity": 15,
+              "itemId": "arc-powercell",
+              "itemName": "Arc Powercell",
+              "quantity": 5,
               "imageUrl": null
             }
           ],
@@ -606,15 +630,21 @@
           "description": "Unlock advanced material processing",
           "requiredItems": [
             {
-              "itemId": "refined-metals",
-              "itemName": "Refined Metals",
-              "quantity": 15,
+              "itemId": "toaster",
+              "itemName": "Toaster",
+              "quantity": 3,
+              "imageUrl": null
+            },
+	    {
+              "itemId": "arc-motion-core",
+              "itemName": "ARC Motion Core",
+              "quantity": 5,
               "imageUrl": null
             },
             {
-              "itemId": "purification-agents",
-              "itemName": "Purification Agents",
-              "quantity": 10,
+              "itemId": "fireball-burner",
+              "itemName": "Fireball Burner",
+              "quantity": 8,
               "imageUrl": null
             }
           ],
@@ -639,15 +669,21 @@
           "description": "Unlock rare material synthesis",
           "requiredItems": [
             {
-              "itemId": "exotic-alloys",
-              "itemName": "Exotic Alloys",
-              "quantity": 8,
+              "itemId": "motor",
+              "itemName": "Motor",
+              "quantity": 3,
+              "imageUrl": null
+            },
+	    {
+              "itemId": "arc-circuitry",
+              "itemName": "ARC Circuitry",
+              "quantity": 10,
               "imageUrl": null
             },
             {
-              "itemId": "synthesis-matrix",
-              "itemName": "Synthesis Matrix",
-              "quantity": 5,
+              "itemId": "bombardier-cell",
+              "itemName": "Bombardier Cell",
+              "quantity": 6,
               "imageUrl": null
             }
           ],
@@ -673,55 +709,16 @@
       "imageUrl": null,
       "levels": [
         {
-          "levelId": "scrappy_level_1",
-          "stationId": "scrappy",
-          "levelNumber": 1,
-          "name": "Scrappy Level 1",
-          "description": "Upgrade Scrappy's basic functionality",
-          "requiredItems": [
-            {
-              "itemId": "robot-parts",
-              "itemName": "Robot Parts",
-              "quantity": 20,
-              "imageUrl": null
-            },
-            {
-              "itemId": "ai-chips",
-              "itemName": "AI Chips",
-              "quantity": 5,
-              "imageUrl": null
-            }
-          ],
-          "rewards": [
-            {
-              "itemId": null,
-              "itemName": "Passive Material Delivery",
-              "quantity": 1,
-              "imageUrl": null,
-              "type": "UNLOCK"
-            }
-          ],
-          "unlocks": "Scrappy delivers basic materials periodically",
-          "status": "NOT_STARTED",
-          "imageUrl": null
-        },
-        {
           "levelId": "scrappy_level_2",
           "stationId": "scrappy",
           "levelNumber": 2,
           "name": "Scrappy Level 2",
-          "description": "Improve Scrappy's delivery frequency and quality",
+          "description": "Forager",
           "requiredItems": [
             {
-              "itemId": "advanced-robotics",
-              "itemName": "Advanced Robotics",
-              "quantity": 10,
-              "imageUrl": null
-            },
-            {
-              "itemId": "memory-cores",
-              "itemName": "Memory Cores",
-              "quantity": 6,
+              "itemId": "dog-collar",
+              "itemName": "Dog Collar",
+              "quantity": 1,
               "imageUrl": null
             }
           ],
@@ -743,17 +740,17 @@
           "stationId": "scrappy",
           "levelNumber": 3,
           "name": "Scrappy Level 3",
-          "description": "Maximize Scrappy's capabilities",
+          "description": "Scavenger",
           "requiredItems": [
             {
-              "itemId": "quantum-ai-cores",
-              "itemName": "Quantum AI Cores",
-              "quantity": 4,
+              "itemId": "lemon",
+              "itemName": "Lemon",
+              "quantity": 3,
               "imageUrl": null
             },
             {
-              "itemId": "nano-assemblers",
-              "itemName": "Nano Assemblers",
+              "itemId": "apricot",
+              "itemName": "Apricot",
               "quantity": 3,
               "imageUrl": null
             }
@@ -767,7 +764,85 @@
               "type": "UNLOCK"
             }
           ],
-          "unlocks": "Maximum delivery frequency with rare materials",
+          "unlocks": "Increased delivery frequency and better materials",
+          "status": "LOCKED",
+          "imageUrl": null
+        },
+	{
+          "levelId": "scrappy_level_4",
+          "stationId": "scrappy",
+          "levelNumber": 4,
+          "name": "Scrappy Level 4",
+          "description": "Treasure Hunter",
+          "requiredItems": [
+            {
+              "itemId": "prickly-pear",
+              "itemName": "Prickly Pear",
+              "quantity": 6,
+              "imageUrl": null
+            },
+	    {
+              "itemId": "olives",
+              "itemName": "Olives",
+              "quantity": 6,
+              "imageUrl": null
+            },
+            {
+              "itemId": "cat-bed",
+              "itemName": "Cat Bed",
+              "quantity": 1,
+              "imageUrl": null
+            }
+          ],
+          "rewards": [
+            {
+              "itemId": null,
+              "itemName": "Maximum Delivery",
+              "quantity": 1,
+              "imageUrl": null,
+              "type": "UNLOCK"
+            }
+          ],
+          "unlocks": "Increased delivery frequency and better materials",
+          "status": "LOCKED",
+          "imageUrl": null
+        },
+	{
+          "levelId": "scrappy_level_5",
+          "stationId": "scrappy",
+          "levelNumber": 5,
+          "name": "Scrappy Level 5",
+          "description": "Master Hoarder",
+          "requiredItems": [
+            {
+              "itemId": "mushroom",
+              "itemName": "Mushroom",
+              "quantity": 12,
+              "imageUrl": null
+            },
+	    {
+              "itemId": "apricot",
+              "itemName": "Apricot",
+              "quantity": 12,
+              "imageUrl": null
+            },
+            {
+              "itemId": "very-comfortable-pillow",
+              "itemName": "Very Comfortable Pillow",
+              "quantity": 3,
+              "imageUrl": null
+            }
+          ],
+          "rewards": [
+            {
+              "itemId": null,
+              "itemName": "Maximum Delivery",
+              "quantity": 1,
+              "imageUrl": null,
+              "type": "UNLOCK"
+            }
+          ],
+          "unlocks": "Increased delivery frequency and better materials",
           "status": "LOCKED",
           "imageUrl": null
         }
